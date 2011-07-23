@@ -6,7 +6,7 @@ class Article < ActiveRecord::Base
   validates_presence_of :title
   validates_presence_of :category_id
 
-  belongs_to :project # XXX association added to allow searching to work
+  belongs_to :project # this will allow the article to be searched through, works along with init.rb
   belongs_to :category
   belongs_to :author, :class_name => 'User', :foreign_key => 'author_id'
 
@@ -18,13 +18,18 @@ class Article < ActiveRecord::Base
   acts_as_searchable :columns => [ "kb_articles.title", "kb_articles.content"],
                      :include => [ :project ],
                      :order_column => "kb_articles.id",
-                     :permission => nil
+                     :permission => nil,
+                     :date_column => "#{table_name}.created_at"
 
+  # this controls what text is displayed
+  # when results come back as an article
   acts_as_event :title => Proc.new { |o| "#{l(:label_title_articles)} ##{o.id}: #{o.title}" },
                 :description => Proc.new { |o| "#{o.content}" },
                 :datetime => :created_at,
                 :type => 'articles',
-                :url => Proc.new { |o| {:controller => 'articles', :action => 'show', :id => nil, :article_id => o.id} }
+                :url => Proc.new { |o| {:controller => 'articles', :action => 'show', :id => o.id}
+  }
+
 
   has_many :comments, :as => :commented, :dependent => :delete_all, :order => "created_on"
 

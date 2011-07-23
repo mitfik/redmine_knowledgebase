@@ -1,27 +1,14 @@
 module KnowledgebaseHelper
 
-  # Display a link if the user has a global permission
-  def link_to_if_authorized_globally(name, options = {}, html_options = nil, *parameters_for_method_reference)
-    if authorized_globally(options[:controller],options[:action])
-      link_to(name, options, html_options, *parameters_for_method_reference)
-    end
-  end
-  
-  def link_to_remote_if_authorized_globally(name, options = {}, html_options = nil, *parameters_for_method_reference)
-    if authorized_globally(options[:controller],options[:action])
-      link_to_remote(name, options, html_options, *parameters_for_method_reference)
-    end
+  def user_allowed(action,scope=nil)
+    User.current.allowed_to?(action,scope)
   end
 
-  def authorized_globally(controller,action)
-    User.current.allowed_to?({:controller => controller, :action => action}, nil, :global => true)
-  end
- 
   def format_article_summary(article, format)
     output = nil
     case format
     when "normal"
-      output = textilizable article.summary
+      output = article.summary
     when "newest"
       output = "Created " + time_ago_in_words(article.created_at) + " ago in " + link_to(article.category.title, {:controller => 'categories', :action => 'show', :id => article.category.id})
     when "updated"

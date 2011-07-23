@@ -10,3 +10,9 @@
   the setting in the configuration panel (default => true)
 * cleanup category list on the main page
 * fixed comment creation popup not being displayed
+
+0.3.2 (11-JUL-23)
+-----------------
+* Wiki macros for articles and categories.
+* Knowledgebase is now project-based, fully configurable through permissions.
+

@@ -27,7 +27,7 @@ en:
   title_top_rated_articles: "Top Rated Articles"
   title_browse_by_category: "Browse by Category"
   title_new_category: "New Category"
-  message_no_articles: "No articles have been added to the knowledgebase yet. Maybe you want to get the ball rolling ..."
+  message_no_articles: "There have been no articles added."
   label_new_article: "New Article"
   label_new_category: "New Category"
   label_edit_category: "Edit Category"
@@ -37,5 +37,5 @@ en:
   allow_sort_category_tree: "Sort the category tree alphabetically?"
   show_category_totals: "Show category totals in tree?"
   summary_item_limit: "Knowledgebase summary page article limit"
-  #prefix for the macro links pointing to a Wiki article
+  no_sections_enabled: "There were no sections enabled to be displayed.  These settings can be changed in the permissions for the knowledgebase plugin."
   label_kb_link: "KB#{{kb_id}}"

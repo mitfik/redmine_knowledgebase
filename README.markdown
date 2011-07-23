@@ -1,18 +1,20 @@
 # Redmine Knowledgebase plugin
 
-This plugin adds generic knowledgebase funcationlity to the redmine project management application.
+This plugin adds a professional knowledgebase functionality to the Redmine project management application.
 
 ## Introduction
 
-Redmine (www.redmine.org) is just plain awesome, and has proven to provide 90% of the functionality I need. The one feature that was missing was a usable knowledgebase component. I've looked at some of the open source solutions available, but couldn't find anything that fit my needs exactly. Seeing as redmine is so easily extended, I figured why not create it for this platform instead of starting yet another project from scratch :P
+Redmine (www.redmine.org) is just plain awesome, and has proven to provide 90% of the functionality I need. The one feature that was missing was a usable knowledgebase component. I've looked at some of the open source solutions available, but couldn't find anything that fit my needs exactly. Seeing as Redmine is so easily extended, I figured why not create it for this platform instead of starting yet another project from scratch :P
 
 ## Features
 
+* Knowledgebase articles per project
 * Categorization of Articles
 * Article ratings
 * File attachments
 * Article Comments
 * Article Tags
+* Wiki macros
 * Permissions
 
 ## Requirements
@@ -63,22 +65,13 @@ need to restart Redmine for the plugin to be available.
 
 ## Overview
 
-Once the Redmine Knowledgebase Plugin is installed, there will be a
-Knowledgebase link in the Redmine navigation header. Unlike the Redmine
-Wiki, which is only available at the per-project or subproject level,
-the Knowledgebase is available at the root level of the Redmine
-application.
+Once the Redmine Knowledgebase Plugin is installed, Knowledgebase articles are managed and controlled at the project level. After enabling and setting the right roles/permissions, each project will have its own categories and articles. Knowledgebase will appear as a tab view per project. 
 
 ## Configuring the Knowledgebase
 
-To start using the Knowledgebase plugin, click on the Knowledgebase link
-in the Redmine navigation header.
+To start using the Knowledgebase plugin, go to your project Settings -> Modules and enable Knowledgebase. Then, go to Administration -> Roles and Permissions. Select a role (e.g. Non member). Under Knowledgebase, add at least Manage Articles and Manage Article Categories permission (to test functionality; later apply real permissions for your users). Select any other that apply and Save. See Permissions section for more information.
 
-This takes you to the default page for
-the Knowledgebase, with this text: *"No articles have been added to the
-knowledgebase yet. Maybe you want to get the ball rolling ..."*. To the
-right is a green circle with a plus (+) sign, and the link to add a New
-Category.
+This takes you to the default page for the Knowledgebase, with this text: *"There have been no articles added"*. To the right is a green circle with a plus (+) sign, and the link to add a New Category.
 
 Click on **New Category**. This takes you to the Create Category page.
 
@@ -110,11 +103,28 @@ use that to navigate to any category or sub-category. You can also
 navigate to categories (not sub-categories) by clicking on the category
 name in the right hand *Browse by Category* side bar.
 
+### Knowledgebase Permissions
+
+The following permissions are available: 
+
+* View articles
+* Create articles
+* Edit articles
+* Manage articles
+* Create article categories
+* Comment and rate articles
+* Manage articles comments
+* Manage article categories
+* View newest articles
+* View most popular articles
+* View top rated articles
+* View recently updated articles
+
+For granular permissions, create specific Knowledgebase roles, associate the permissions and add them to a project. The Knowledebase home page statistic quadrants will appear or dissapear, based on the View permissions. 
 
 ## Using the Knowledgebase
 
-Once you have created categories, you can then add articles and
-sub-categories.
+Once you have enabled the module, set proper permissions and created categories, you can then add articles and sub-categories.
 
 ### Creating Sub-categories
 
@@ -190,7 +200,15 @@ You can easily create links to articles and categories from issues or Wiki pages
 * {{article(<article_id>)}} will render a link to the "kb#<article_id>: <article_title>" format.
 * {{category(<category_id>)}} will render a link to the "<category_title>" format, only renders the title of the category.
 
+For example: {{kb(71)}} will render a link: KB#71
+
 ## Knowledgebase Home Page
 
-Now that categories and articles have been created, the Home page of the Knowledgebase will show the *Newest Articles*, *Recently Updated Articles*, *Most Popular Articles*, and *Top Rated Articles*. You can use this page to help navigate the Knowledgebase, as well as using the *Jump to Category* drop down menu or the *Browse by Category* menu on the right of the screen. You can reach this page from anywhere inside the Knowledgebase by clicking on the Home link.
+Now that categories and articles have been created, the Home page of the Knowledgebase will show the *Newest Articles*, *Recently Updated Articles*, *Most Popular Articles*, and *Top Rated Articles* base on view permissions you have granted. You can use this page to help navigate the Knowledgebase, as well as using the *Jump to Category* drop down menu or the *Browse by Category* menu on the right of the screen. You can reach this page from anywhere inside the Knowledgebase by clicking on the Home link.
+
+**Note:** URL Links to categories or articles will appear as follows:
+
+* Categories: http://redmine-server.foo.bar/categories/[number]
+
+* Articles: http://redmine-server.foo.bar/articles/[number]
 

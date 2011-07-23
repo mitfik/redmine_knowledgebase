@@ -1,8 +1,8 @@
 require 'redmine'
+require 'create_project_association'
 require 'acts_as_viewed'
 require 'acts_as_rated'
 require 'acts_as_taggable'
-#Register KB macro
 require 'macros'
 
 Redmine::Plugin.register :redmine_knowledgebase do
@@ -19,57 +19,68 @@ Redmine::Plugin.register :redmine_knowledgebase do
     'knowledgebase_anonymous_access' => "1",
     'knowledgebase_sort_category_tree' => "1",
     'knowledgebase_show_category_totals' => "1",
-    'knowledgebase_summary_limit' => "5"
+    'knowledgebase_summary_limit' => "5",
+    'display_newest' => true,
+    'display_recent' => true,
+    'display_popular' => true,
+    'display_rated' => true
   }, :partial => 'settings/knowledgebase_settings'
 
-  #Global permissions
-  project_module :knowledgebase do
-    permission :view_articles, {
-      :knowledgebase => :index,
-      :articles      => [:show, :tagged],
-      :categories    => [:index, :show]
-    }
-    permission :comment_and_rate_articles, {
-      :knowledgebase => :index,
-      :articles      => [:show, :tagged, :rate, :comment, :add_comment],
-      :categories    => [:index, :show]
-    }
-    permission :create_articles, {
-      :knowledgebase => :index,
-      :articles      => [:show, :tagged, :new, :create, :add_attachment, :preview],
-      :categories    => [:index, :show]
-    }
-    permission :edit_articles, {
-      :knowledgebase => :index,
-      :articles      => [:show, :tagged, :edit, :update, :add_attachment, :preview],
-      :categories    => [:index, :show]
-    }
-    permission :manage_articles, {
-      :knowledgebase => :index,
-      :articles      => [:show, :new, :create, :edit, :update, :destroy, :add_attachment, 
-                         :preview, :comment, :add_comment, :destroy_comment, :tagged],
-      :categories    => [:index, :show]
-    }
-    permission :manage_articles_comments, {
-      :knowledgebase => :index,
-      :articles      => [:show, :comment, :add_comment, :destroy_comment],
-      :categories    => [:index, :show]
-    }
-    permission :create_article_categories, {
-      :knowledgebase => :index,
-      :categories    => [:index, :show, :new, :create]
-    }
-    permission :manage_article_categories, {
-      :knowledgebase => :index,
-      :categories    => [:index, :show, :new, :create, :edit, :update, :delete]
-    }
-  end
-  
-  menu :top_menu, :knowledgebase, { :controller => 'knowledgebase', :action => 'index' }, :caption => :knowledgebase_title, 
-	:if =>  Proc.new {
-		User.current.allowed_to?({ :controller => 'knowledgebase', :action => 'index' }, nil, :global => true) ||
-		Setting['plugin_redmine_knowledgebase']['knowledgebase_anonymous_access'].to_i == 1
-	}
+    project_module :knowledgebase do
+        permission :view_articles, {
+          :knowledgebase => :index,
+          :articles      => [:show, :tagged, :index],
+          :categories    => [:index, :show]
+        }
+        permission :view_top_rated_articles, {
+          :knowledgebase => :index
+        }
+        permission :view_newest_articles, {
+          :knowledgebase => :index
+        }
+        permission :view_recently_updated_articles, {
+          :knowledgebase => :index
+        }
+        permission :view_most_popular_articles, {
+          :knowledgebase => :index
+        }
+        permission :comment_and_rate_articles, {
+          :knowledgebase => :index,
+          :articles      => [:show, :tagged, :rate, :comment, :add_comment, :index],
+          :categories    => [:index, :show]
+        }
+        permission :create_articles, {
+          :knowledgebase => :index,
+          :articles      => [:show, :tagged, :new, :create, :add_attachment, :preview, :index],
+          :categories    => [:index, :show]
+        }
+        permission :edit_articles, {
+          :knowledgebase => :index,
+          :articles      => [:show, :tagged, :edit, :update, :add_attachment, :preview, :index],
+          :categories    => [:index, :show]
+        }
+        permission :manage_articles, {
+          :knowledgebase => :index,
+          :articles      => [:show, :new, :create, :edit, :update, :destroy, :add_attachment, 
+                             :preview, :comment, :add_comment, :destroy_comment, :tagged, :index],
+          :categories    => [:index, :show]
+        }
+        permission :manage_articles_comments, {
+          :knowledgebase => :index,
+          :articles      => [:show, :comment, :add_comment, :destroy_comment, :index],
+          :categories    => [:index, :show]
+        }
+        permission :create_article_categories, {
+          :knowledgebase => :index,
+          :categories    => [:index, :show, :new, :create]
+        }
+        permission :manage_article_categories, {
+          :knowledgebase => :index,
+          :categories    => [:index, :show, :new, :create, :edit, :update, :delete]
+        }
+      end
+
+     menu :project_menu, :knowledgebase, {:controller=>'knowledgebase', :action=>'index'}, :caption=>'Knowledgebase', :before=>:boards, :params=>:project_id
 
   Redmine::Search.available_search_types << 'articles'
 end

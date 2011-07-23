@@ -5,6 +5,7 @@ class Category < ActiveRecord::Base
   
   validates_presence_of :title
   
+  belongs_to :project
   has_many :articles
   
   acts_as_nested_set :order => 'title'

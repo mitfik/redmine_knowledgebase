@@ -5,11 +5,27 @@ class ArticlesController < KnowledgebaseController
   include AttachmentsHelper
   include FaceboxRender
 
-  #Authorize against global permissions defined in init.rb
-  before_filter :authorize_global
+  before_filter :find_project, :authorize
   
+  def find_project
+    if !params[:project_id].nil?
+        @project=Project.find(params[:project_id])
+    elsif !params[:category_id].nil?
+        @project=Category.find(params[:category_id]).project
+    elsif !params[:id].nil?
+        @project=Article.find(params[:id]).category.project
+    elsif !params[:article_id].nil?
+        @project=Article.find(params[:article_id]).category.project
+    end
+  end
+
   def new
     @article = Article.new
+
+    # only get root categories
+    # which will then be fed into the function
+    # this will make it render correctly
+    @categories=@project.categories.find(:all, :conditions=>["parent_id IS Null"])
     @default_category = params[:category_id]
     @article.category_id = params[:category_id]
   end
@@ -20,14 +36,15 @@ class ArticlesController < KnowledgebaseController
     render :partial => "rating", :locals => {:article => @article}
   end
   
-  def create    
+  def create
     @article = Article.new(params[:article])
     @article.category_id = params[:category_id]
     @article.author_id = User.current.id
+    @article.project_id=Category.find(params[:category_id]).project_id
     if @article.save
       attachments = attach(@article, params[:attachments])
       flash[:notice] = "Created Article " + @article.title
-      redirect_to({ :controller => 'knowledgebase', :action => 'index' })
+      redirect_to({ :controller=>'categories', :action=>'show', :id=>Category.find(params[:category_id])})
     else
       render(:action => 'new')
     end
@@ -41,6 +58,7 @@ class ArticlesController < KnowledgebaseController
   end
   
   def edit
+    @categories=@project.categories.find(:all, :conditions=>["parent_id IS Null"])
     @article = Article.find(params[:id])
   end
   
@@ -77,9 +95,10 @@ class ArticlesController < KnowledgebaseController
   
   def destroy
     @article = Article.find(params[:id])
+    category_id=@article.category.id
     @article.destroy
     flash[:notice] = "Article Removed"
-    redirect_to({ :controller => 'knowledgebase', :action => 'index' })
+    redirect_to({ :controller => 'categories', :action=>'show', :id=>category_id })
   end
 
   def add_attachment
