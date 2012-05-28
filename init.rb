@@ -1,5 +1,5 @@
 require 'redmine'
-require 'create_project_association'
+require 'project_path'
 require 'acts_as_viewed'
 require 'acts_as_rated'
 require 'acts_as_taggable'
