@@ -52,7 +52,7 @@ running this command).
 In the Redmine application root directory, run this command as the root
 user:
 
-<pre><code>rake db:migrate_plugins RAILS_ENV=production</code></pre>
+<pre><code>rake db:migrate:plugins RAILS_ENV=production</code></pre>
 
 
 More information on installing Redmine plugins can be found here: [http://www.redmine.org/wiki/redmine/Plugins](http://www.redmine.org/wiki/redmine/Plugins "Redmine Plugins")
