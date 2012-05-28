@@ -1,5 +1,5 @@
 require 'redmine'
-require 'project_path'
+require 'project_patch'
 require 'acts_as_viewed'
 require 'acts_as_rated'
 require 'acts_as_taggable'
