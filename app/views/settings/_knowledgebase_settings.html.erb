@@ -17,3 +17,8 @@
   <%= text_field_tag("settings[knowledgebase_summary_limit]", @settings["knowledgebase_summary_limit"] || defaults["knowledgebase_summary_limit"]) %>
 </p>
 
+<p>
+  <label><%= l(:label_kb_title) %>:</label>
+  <%= text_field_tag("settings[knowledgebase_title]", @settings["knowledgebase_title"] || defaults["knowledgebase_title"]) %>
+</p>
+

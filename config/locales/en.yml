@@ -39,3 +39,6 @@ en:
   summary_item_limit: "Knowledgebase summary page article limit"
   no_sections_enabled: "There were no sections enabled to be displayed.  These settings can be changed in the permissions for the knowledgebase plugin."
   label_kb_link: "KB#{{kb_id}}"
+  label_kb_title: Title
+  
+  notice_missing_categories: "Unfortunately, there aren't any Categories defined, and you need to be logged in to create new categories."

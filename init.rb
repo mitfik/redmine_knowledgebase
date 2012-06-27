@@ -23,7 +23,8 @@ Redmine::Plugin.register :redmine_knowledgebase do
     'display_newest' => true,
     'display_recent' => true,
     'display_popular' => true,
-    'display_rated' => true
+    'display_rated' => true,
+    'knowladgebase_title' => "Knowledgebase"
   }, :partial => 'settings/knowledgebase_settings'
 
     project_module :knowledgebase do

@@ -33,9 +33,10 @@ pl:
   label_edit_category: "Edytuj kategorię"
   label_delete_category: "Usuń kategorię"
   label_subcategories: "Kategorie podrzędne"
-  allow_anon_access: "Allow anonymous access?"
-  allow_sort_category_tree: "Sort the category tree alphabetically?"
+  allow_anon_access: "Zezwolić na dostęp anonimowym użytkownikom?"
+  allow_sort_category_tree: "Sortować kategorie alfabetycznie?"
   show_category_totals: "Show category totals in tree?"
   summary_item_limit: "Knowledgebase summary page article limit"
   no_sections_enabled: "There were no sections enabled to be displayed.  These settings can be changed in the permissions for the knowledgebase plugin."
   label_kb_link: "KB#{{kb_id}}"
+  label_kb_title: Tytuł

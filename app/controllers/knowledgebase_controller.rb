@@ -12,6 +12,7 @@ class KnowledgebaseController < ApplicationController
     rescue
       summary_limit = 5
     end
+    @kb_title = Setting['plugin_redmine_knowledgebase']['knowledgebase_title']
 
     article_table=Article.table_name
     @categories=@project.categories.find(:all, :conditions=>["parent_id IS NULL"])

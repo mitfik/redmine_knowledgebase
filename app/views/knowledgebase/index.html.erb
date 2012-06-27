@@ -1,9 +1,6 @@
-<% 
-settings=Setting['plugin_redmine_knowledgebase']
-
-if @categories.length == 0 and !User.current.logged? %>
-	<h2>Welcome to the Redmine Knowledgebase plugin</h2>
-	<p>Unfortunately, there aren't any Categories defined, and you need to be logged in to create new categories.</p>
+<h2> <%= @kb_title %> </h2>
+<% if @categories.length == 0 and !User.current.logged? %>
+  <p> <%= l(:notice_missing_categories) %> </p>
 <% else %>
   <div class="contextual">
     <% if @categories.length > 0 %>
